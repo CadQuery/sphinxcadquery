@@ -36,6 +36,8 @@ You may want to play with the supported options for a customized look:
       :background: #222222
       :width: 80%
       :height: 200px
+      :gridsize: 20.
+      :griddivisions: 20
 
 
 Notes

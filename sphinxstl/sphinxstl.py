@@ -21,7 +21,7 @@ raw_html_template = """
    <script>
      window.addEventListener('load', function() {{
        thingiurlbase = "_static/thingiview";
-       thingiview = new Thingiview("{thingid}");
+       thingiview = new Thingiview("{thingid}", {gridsize}, {griddivisions});
        thingiview.setObjectColor('{color}');
        thingiview.setBackgroundColor('{background}');
        thingiview.setRotation({rotation});
@@ -49,6 +49,8 @@ class STLDirective(Directive):
         'rotation': directive_truefalse,
         'width': directives.unchanged,
         'height': directives.unchanged,
+        'gridsize': float,
+        'griddivisions': int,
     }
 
     def run(self):
@@ -59,6 +61,8 @@ class STLDirective(Directive):
             rotation=self.options.get('rotation', 'true'),
             width=self.options.get('width', '100%'),
             height=self.options.get('height', '400px'),
+            gridsize=self.options.get('gridsize', 100.),
+            griddivisions=self.options.get('griddivisions', 20),
             thingid=uuid4().hex,
         )
         stl = nodes.raw('', raw_html, format='html')

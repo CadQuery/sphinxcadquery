@@ -1,8 +1,8 @@
-var Thingiview = function(containerId, gridsize, gridunit) {
+var Thingiview = function(containerId, gridsize, griddivisions) {
   this.scope = this;
   this.containerId  = containerId;
   this.gridsize = gridsize;
-  this.gridunit = gridunit;
+  this.griddivisions = griddivisions;
   this.init();
 }
 
@@ -765,15 +765,17 @@ Thingiview.prototype.displayAlert = function(msg) {
 Thingiview.prototype.loadPlaneGeometry = function() {
     var material = new THREE.LineBasicMaterial({color:0xafafaf, opacity: 1});
     this.plane = new THREE.Object3D();
-    for (var i=-this.gridsize/2; i<= this.gridsize/2; i += this.gridunit) {
+    var step = this.gridsize / this.griddivisions
+    var size = this.gridsize / 2.
+    for (var i=-size; i<= size; i += step) {
       var geometry = new THREE.Geometry();
-      geometry.vertices.push(new THREE.Vector3 (i, -this.gridsize/2, 0));
-      geometry.vertices.push(new THREE.Vector3 (i, this.gridsize/2, 0));
+      geometry.vertices.push(new THREE.Vector3 (i, -size, 0));
+      geometry.vertices.push(new THREE.Vector3 (i, size, 0));
       var line = new THREE.Line(geometry, material);
       this.plane.add(line);
       geometry = new THREE.Geometry();
-      geometry.vertices.push(new THREE.Vector3 (-this.gridsize/2, i, 0));
-      geometry.vertices.push(new THREE.Vector3 (this.gridsize/2, i, 0));
+      geometry.vertices.push(new THREE.Vector3 (-size, i, 0));
+      geometry.vertices.push(new THREE.Vector3 (size, i, 0));
       line = new THREE.Line(geometry, material);
       this.plane.add(line);
     }
