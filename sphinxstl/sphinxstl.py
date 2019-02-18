@@ -81,7 +81,6 @@ def copy_asset_files(app, exc):
 def setup(app):
     app.connect('build-finished', copy_asset_files)
     app.add_javascript('thingiview/three.min.js')
-    app.add_javascript('thingiview/plane.js')
     app.add_javascript('thingiview/thingiview.js')
     app.add_directive('stl', STLDirective)
     return {'version': __version__, 'parallel_read_safe': True}
