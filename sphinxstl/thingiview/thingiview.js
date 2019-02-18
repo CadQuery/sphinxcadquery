@@ -673,14 +673,11 @@ Thingiview.prototype.loadArray = function(array) {
     this.geometry = new STLGeometry(array);
     this.loadObjectGeometry();
     this.setRotation(false);
-    this.setRotation(true);
     this.centerCamera();
     log("finished loading " + this.geometry.faces.length + " faces.");
   }
 
 Thingiview.prototype.newWorker = function(cmd, param) {
-    this.setRotation(false);
-
     var worker = new WorkerFacade(thingiurlbase + '/thingiloader.js');
     worker.scope = this;
 
@@ -693,8 +690,6 @@ Thingiview.prototype.newWorker = function(cmd, param) {
         this.scope.progressBar.innerHTML = '';
         this.scope.progressBar.style.display = 'none';
 
-        this.scope.setRotation(false);
-        this.scope.setRotation(true);
         log("finished loading " + this.scope.geometry.faces.length + " faces.");
         this.scope.centerCamera();
       } else if (event.data.status == "complete_points") {
