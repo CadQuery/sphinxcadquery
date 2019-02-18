@@ -58,7 +58,7 @@ class STLDirective(Directive):
             stluri=self.arguments[0],
             color=self.options.get('color', '#99ccff'),
             background=self.options.get('background', '#ffffff'),
-            rotation=self.options.get('rotation', 'true'),
+            rotation=self.options.get('rotation', 'false'),
             width=self.options.get('width', '100%'),
             height=self.options.get('height', '400px'),
             gridsize=self.options.get('gridsize', 100.),
