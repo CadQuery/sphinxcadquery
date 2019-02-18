@@ -538,8 +538,6 @@ Thingiview.prototype.setCameraView = function(dir) {
     mouseYOnMouseDown = this.targetYRotation;
 
     this.scope.centerCamera();
-
-    this.sceneLoop();
   }
 
 Thingiview.prototype.setCameraZoom = function(factor) {
@@ -660,6 +658,8 @@ Thingiview.prototype.centerCamera = function() {
       this.pointLight.position.x = this.geometry.center_y;
       this.pointLight.position.y = this.geometry.center_y;
       this.pointLight.position.z = this.geometry.max_z * 2;
+
+      this.sceneLoop();
     } else {
       // set to any valid position so it doesn't fail before geometry is available
       this.camera.position.y = -70;
