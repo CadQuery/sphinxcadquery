@@ -26,7 +26,7 @@ raw_html_template = """
        thingiview.setBackgroundColor('{background}');
        thingiview.setRotation({rotation});
        thingiview.initScene();
-       thingiview.loadSTL("https://upload.wikimedia.org/wikipedia/commons/b/b1/Sphericon.stl");
+       thingiview.loadSTL("{stluri}");
      }}, false);
    </script>
 
@@ -40,6 +40,9 @@ def directive_truefalse(argument):
 
 class STLDirective(Directive):
     has_content = True
+    required_arguments = 1
+    optional_arguments = 0
+    final_argument_whitespace = True
     option_spec = {
         'color': directives.unchanged,
         'background': directives.unchanged,
@@ -50,6 +53,7 @@ class STLDirective(Directive):
 
     def run(self):
         raw_html = raw_html_template.format(
+            stluri=self.arguments[0],
             color=self.options.get('color', '#99ccff'),
             background=self.options.get('background', '#ffffff'),
             rotation=self.options.get('rotation', 'true'),

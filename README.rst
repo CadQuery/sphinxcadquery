@@ -24,13 +24,13 @@ Then you can use the ``.. stl::`` directive in your documentation:
 
 .. code:: sphinx
 
-   .. stl::
+   .. stl:: http://upload.wikimedia.org/wikipedia/commons/9/93/Utah_teapot_%28solid%29.stl
 
 You may want to play with the supported options for a customized look:
 
 .. code:: sphinx
 
-   .. stl::
+   .. stl:: http://upload.wikimedia.org/wikipedia/commons/9/93/Utah_teapot_%28solid%29.stl
       :rotation: true
       :color: #ff00ff
       :background: #222222
