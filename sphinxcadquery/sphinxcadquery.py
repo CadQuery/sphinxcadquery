@@ -61,7 +61,8 @@ class CadQueryDirective(Directive):
 
     def run(self):
 
-        fname = Path(self.arguments[0]).resolve()
+        fname = Path(setup.app.srcdir) / self.arguments[0]
+        fname = fname.resolve()
         loader = importlib.machinery.SourceFileLoader('source', str(fname))
         handle = loader.load_module('source')
 
