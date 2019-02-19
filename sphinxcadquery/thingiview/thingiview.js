@@ -136,6 +136,7 @@ Thingiview.prototype.initScene = function() {
         // this.showPlane = false;
         isWebGl = true;
         this.renderer = new THREE.WebGLRenderer();
+        this.renderer.gammaOutput = true;
         // this.renderer = new THREE.CanvasRenderer();
       } else {
         this.renderer = new THREE.CanvasRenderer();
