@@ -3,16 +3,16 @@ Setup module.
 """
 from setuptools import setup
 
-from sphinxstl import __version__
+from sphinxcadquery import __version__
 
 
 setup(
-    name='sphinxstl',
+    name='sphinxcadquery',
     version=__version__,
     description=
-        'An extension to visualize STL files in your Sphinx documentation',
+        'An extension to visualize CadQuery 3D parts in your Sphinx documentation',
     long_description="""TODO""",
-    url='https://github.com/Peque/sphinxstl',
+    url='https://github.com/Peque/sphinxcadquery',
     author='Miguel Sánchez de León Peque',
     author_email='peque@neosit.es',
     license='BSD License',
@@ -27,9 +27,9 @@ setup(
         'Programming Language :: Python :: 3',
         'Framework :: Sphinx :: Extension',
     ],
-    packages=['sphinxstl'],
+    packages=['sphinxcadquery'],
     package_data={
-        'sphinxstl': [
+        'sphinxcadquery': [
             'thingview',
         ],
     },
