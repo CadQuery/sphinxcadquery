@@ -43,6 +43,24 @@ def directive_truefalse(argument):
     return directives.choice(argument, ('true', 'false'))
 
 
+def find_part(module, name):
+    """
+    Try to find the 3D part to visualize.
+
+    If no part name is provided, it will try with a list of default/usual
+    candidates.
+    """
+    source = module.__dict__
+    if name:
+        candidates = [name]
+    else:
+        candidates = ['result', 'part']
+    for candidate in candidates:
+        if candidate in source.keys():
+            return source[candidate]
+    raise KeyError('Could not find `%s` to visualize!' % candidates[0])
+
+
 class CadQueryDirective(Directive):
     has_content = True
     required_arguments = 1
@@ -66,8 +84,8 @@ class CadQueryDirective(Directive):
         loader = importlib.machinery.SourceFileLoader('source', str(fname))
         handle = loader.load_module('source')
 
-        select = self.options.get('select', 'part')
-        part = handle.__dict__[select]
+        select = self.options.get('select', None)
+        part = find_part(handle, select)
         content = cadquery.exporters.toString(part, 'STL')
         digest = sha256(content.encode('utf')).hexdigest()
 
