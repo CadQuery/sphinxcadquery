@@ -30,7 +30,7 @@ setup(
     packages=['sphinxcadquery'],
     package_data={
         'sphinxcadquery': [
-            'thingview',
+            'thingiview/*',
         ],
     },
     install_requires=[
