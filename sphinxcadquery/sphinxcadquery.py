@@ -89,7 +89,7 @@ class CadQueryDirective(Directive):
             height=self.options.get('height', '400px'),
             gridsize=self.options.get('gridsize', 100.),
             griddivisions=self.options.get('griddivisions', 20),
-            thingid=digest,
+            thingid=uuid4().hex,
         )
         stl = nodes.raw('', raw_html, format='html')
         return [stl]
