@@ -22,6 +22,13 @@ Enable the Sphinx extension in your ``conf.py`` file:
 
 Then you can use the ``.. cadquery::`` directive in your documentation:
 
+.. cadquery::
+
+   result = cadquery.Workplane("XY").box(2, 2, 2) \
+      .edges("|Z and <Y").chamfer(0.2)
+
+You may provide a source code file instead:
+
 .. code:: sphinx
 
    .. cadquery:: ../3d/mydesign.py

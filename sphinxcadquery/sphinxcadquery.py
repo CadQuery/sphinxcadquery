@@ -6,6 +6,7 @@ import logging
 from uuid import uuid4
 from pathlib import Path
 from pkg_resources import resource_filename
+from tempfile import NamedTemporaryFile
 
 from docutils import nodes
 from docutils.parsers.rst import Directive
@@ -22,6 +23,11 @@ from . import __version__
 
 logger = logging.getLogger(__name__)
 
+common_part_names = ['result', 'part']
+common_source_header = [
+    'import cadquery',
+    'import cadquery as cq',
+]
 raw_html_template = """
    <script>
      window.addEventListener('load', function() {{
@@ -43,6 +49,11 @@ def directive_truefalse(argument):
     return directives.choice(argument, ('true', 'false'))
 
 
+def get_handler(fname):
+    loader = importlib.machinery.SourceFileLoader('source', str(fname))
+    return loader.load_module('source')
+
+
 def find_part(module, name):
     """
     Try to find the 3D part to visualize.
@@ -54,7 +65,7 @@ def find_part(module, name):
     if name:
         candidates = [name]
     else:
-        candidates = ['result', 'part']
+        candidates = common_part_names
     for candidate in candidates:
         if candidate in source.keys():
             return source[candidate]
@@ -63,8 +74,8 @@ def find_part(module, name):
 
 class CadQueryDirective(Directive):
     has_content = True
-    required_arguments = 1
-    optional_arguments = 0
+    required_arguments = 0
+    optional_arguments = 1
     final_argument_whitespace = True
     option_spec = {
         'select': directives.unchanged,
@@ -79,10 +90,17 @@ class CadQueryDirective(Directive):
 
     def run(self):
 
-        fname = Path(setup.app.srcdir) / self.arguments[0]
-        fname = fname.resolve()
-        loader = importlib.machinery.SourceFileLoader('source', str(fname))
-        handle = loader.load_module('source')
+        if len(self.arguments):
+            fname = Path(setup.app.srcdir) / self.arguments[0]
+            fname = fname.resolve()
+            handle = get_handler(fname)
+        else:
+            with NamedTemporaryFile() as named:
+                fname = named.name
+                with open(fname, 'w') as tmp:
+                    tmp.write(
+                        '\n'.join(common_source_header + self.content.data))
+                handle = get_handler(fname)
 
         select = self.options.get('select', None)
         part = find_part(handle, select)
