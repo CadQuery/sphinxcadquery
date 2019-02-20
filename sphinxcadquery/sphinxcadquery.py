@@ -96,12 +96,10 @@ class CadQueryDirective(Directive):
 
 
 def copy_asset_files(app, exc):
-    asset_files = [
-        resource_filename(__name__, 'thingiview'),
-    ]
-    if exc is None:  # build succeeded
-        for path in asset_files:
-            copy_asset(path, os.path.join(app.outdir, '_static/thingiview'))
+    if exc is not None:  # build failed
+        return
+    source = resource_filename(__name__, 'thingiview')
+    copy_asset(source, os.path.join(app.outdir, '_static/thingiview'))
 
 
 def setup(app):
