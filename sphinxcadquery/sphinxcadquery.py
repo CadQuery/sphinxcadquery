@@ -107,7 +107,7 @@ class CadQueryDirective(Directive):
         content = cadquery.exporters.toString(part, 'STL')
         digest = sha256(content.encode('utf')).hexdigest()
 
-        fpath = Path('sphinxcadquery')
+        fpath = Path('_static') / 'sphinxcadquery'
         fname = Path(digest).with_suffix('.stl')
         outputdir = Path(setup.app.builder.outdir) / fpath
         outputdir.mkdir(parents=True, exist_ok=True)
