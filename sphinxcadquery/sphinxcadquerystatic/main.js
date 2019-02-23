@@ -53,6 +53,46 @@ function load_stl_into_scene( scene ) {
 
 }
 
+function TranslucentGrid( size, divisions, color1, color2, opacity ) {
+
+    size = size || 10;
+    divisions = divisions || 10;
+    color1 = new THREE.Color( color1 !== undefined ? color1 : 0x444444 );
+    color2 = new THREE.Color( color2 !== undefined ? color2 : 0x888888 );
+
+    var center = divisions / 2;
+    var step = size / divisions;
+    var halfSize = size / 2;
+
+    var vertices = [], colors = [];
+
+    for ( var i = 0, j = 0, k = - halfSize; i <= divisions; i ++, k += step ) {
+
+        vertices.push( - halfSize, 0, k, halfSize, 0, k );
+        vertices.push( k, 0, - halfSize, k, 0, halfSize );
+
+        var color = i === center ? color1 : color2;
+
+        color.toArray( colors, j ); j += 3;
+        color.toArray( colors, j ); j += 3;
+        color.toArray( colors, j ); j += 3;
+        color.toArray( colors, j ); j += 3;
+
+    }
+
+    var geometry = new THREE.BufferGeometry();
+    geometry.addAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
+    geometry.addAttribute( 'color', new THREE.Float32BufferAttribute( colors, 3 ) );
+
+    var material = new THREE.LineBasicMaterial( { vertexColors: THREE.VertexColors, opacity: opacity } );
+
+    THREE.LineSegments.call( this, geometry, material );
+
+}
+
+TranslucentGrid.prototype = Object.create( THREE.LineSegments.prototype );
+TranslucentGrid.prototype.constructor = TranslucentGrid;
+
 function init() {
 
     var canvasElement = document.createElement('canvas');
@@ -78,8 +118,9 @@ function init() {
 
         scene.add( new THREE.AmbientLight( 0x888888 ) );
 
-        var grid = new THREE.GridHelper( 50, 50, 0x555555, 0xbbbbbb );
+        var grid = new TranslucentGrid( 100, 20, 0x888888, 0xdddddd, 0.6 );
         grid.rotateOnAxis( new THREE.Vector3( 1, 0, 0 ), 90 * ( Math.PI / 180 ) );
+        grid.material.transparent = true;
         scene.add( grid );
 
         var camera = new THREE.PerspectiveCamera( 30, 1, 1, 10000 );
