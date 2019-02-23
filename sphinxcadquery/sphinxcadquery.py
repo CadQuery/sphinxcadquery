@@ -29,19 +29,13 @@ common_source_header = [
     'import cadquery as cq',
 ]
 raw_html_template = """
-   <script>
-     window.addEventListener('load', function() {{
-       thingiurlbase = "_static/thingiview";
-       thingiview = new Thingiview("{thingid}", {gridsize}, {griddivisions});
-       thingiview.setObjectColor('{color}');
-       thingiview.setBackgroundColor('{background}');
-       thingiview.setRotation({rotation});
-       thingiview.initScene();
-       thingiview.loadSTL("{stluri}");
-     }}, false);
-   </script>
-
-   <div id="{thingid}" style="width:{width};height:{height}"></div>
+<div class="sphinxcadqueryview">
+    <script>
+        var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
+        parent.fname = "{parturi}";
+        parent.color = "{color}";
+    </script>
+</div>
 """
 
 
@@ -116,16 +110,16 @@ class CadQueryDirective(Directive):
         with open(outputfname, 'w') as outputfile:
             outputfile.write(content)
 
+        source_path = Path(self.state.document.attributes['source'])
+        depth = \
+            len(source_path.parent.relative_to(Path(setup.app.srcdir)).parents)
+        relative_uri = Path('.')
+        for _ in range(depth):
+            relative_uri /= '../'
+
         raw_html = raw_html_template.format(
-            stluri='/' / fpath / fname,
+            parturi=fpath / fname,
             color=self.options.get('color', '#99ccff'),
-            background=self.options.get('background', '#ffffff'),
-            rotation=self.options.get('rotation', 'false'),
-            width=self.options.get('width', '100%'),
-            height=self.options.get('height', '400px'),
-            gridsize=self.options.get('gridsize', 100.),
-            griddivisions=self.options.get('griddivisions', 20),
-            thingid=uuid4().hex,
         )
         stl = nodes.raw('', raw_html, format='html')
         return [stl]
@@ -134,14 +128,20 @@ class CadQueryDirective(Directive):
 def copy_asset_files(app, exc):
     if exc is not None:  # build failed
         return
-    source = resource_filename(__name__, 'thingiview')
-    copy_asset(source, os.path.join(app.outdir, '_static/thingiview'))
+    source = resource_filename(__name__, 'sphinxcadquerystatic')
+    copy_asset(source, os.path.join(app.outdir, '_static/sphinxcadquerystatic'))
 
 
 def setup(app):
     setup.app = app
     app.connect('build-finished', copy_asset_files)
-    app.add_javascript('thingiview/three.min.js')
-    app.add_javascript('thingiview/thingiview.js')
+    app.add_javascript('sphinxcadquerystatic/three.js')
+    app.add_javascript('sphinxcadquerystatic/AMFLoader.js')
+    app.add_javascript('sphinxcadquerystatic/STLLoader.js')
+    app.add_javascript('sphinxcadquerystatic/jszip.min.js')
+    app.add_javascript('sphinxcadquerystatic/OrbitControls.js')
+    app.add_javascript('sphinxcadquerystatic/WebGL.js')
+    app.add_javascript('sphinxcadquerystatic/main.js')
+    app.add_stylesheet('sphinxcadquerystatic/main.css')
     app.add_directive('cadquery', CadQueryDirective)
     return {'version': __version__, 'parallel_read_safe': True}
