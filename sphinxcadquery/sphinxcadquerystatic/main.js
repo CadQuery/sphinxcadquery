@@ -146,6 +146,10 @@ function render() {
         renderer.setViewport( left, bottom, width, height );
         renderer.setScissor( left, bottom, width, height );
 
+        var camera = scene.userData.camera
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
+
         renderer.render( scene, scene.userData.camera );
 
     } );
