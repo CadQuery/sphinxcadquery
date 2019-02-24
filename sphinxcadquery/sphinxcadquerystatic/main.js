@@ -129,7 +129,10 @@ function init() {
         hemiLight.position.set( 50, 50, 100 );
         scene.add( hemiLight );
 
-        var grid = new TranslucentGrid( 100, 20, 0x888888, 0xdddddd, 0.6 );
+        var gsize = parseFloat(scene.userData.view.gridsize);
+        var gdivs = parseInt(scene.userData.view.griddivisions);
+        var grid = new TranslucentGrid( gsize, gdivs, 0x888888, 0xdddddd, 0.6, );
+
         grid.rotateOnAxis( new THREE.Vector3( 1, 0, 0 ), 90 * ( Math.PI / 180 ) );
         grid.material.transparent = true;
         scene.add( grid );

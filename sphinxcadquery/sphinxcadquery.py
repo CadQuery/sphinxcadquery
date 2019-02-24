@@ -34,6 +34,8 @@ raw_html_template = """
         var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
         parent.fname = "{parturi}";
         parent.color = "{color}";
+        parent.gridsize = "{gridsize}";
+        parent.griddivisions = "{griddivisions}";
     </script>
 </div>
 """
@@ -122,6 +124,8 @@ class CadQueryDirective(Directive):
             color=self.options.get('color', '#99bbdd'),
             width=self.options.get('width', '100%'),
             height=self.options.get('height', '400px'),
+            gridsize=self.options.get('gridsize', 100.),
+            griddivisions=self.options.get('griddivisions', 20),
         )
         stl = nodes.raw('', raw_html, format='html')
         return [stl]
