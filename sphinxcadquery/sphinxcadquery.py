@@ -120,7 +120,7 @@ class CadQueryDirective(Directive):
             relative_uri /= '../'
 
         raw_html = raw_html_template.format(
-            parturi=fpath / fname,
+            parturi=relative_uri / fpath / fname,
             color=self.options.get('color', '#99bbdd'),
             width=self.options.get('width', '100%'),
             height=self.options.get('height', '400px'),
