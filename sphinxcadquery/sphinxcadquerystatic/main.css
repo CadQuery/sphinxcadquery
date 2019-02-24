@@ -1,10 +1,6 @@
 div.body {
     background-color: transparent !important;
 }
-.sphinxcadqueryview {
-  width: 100%;
-  height: 400px;
-}
 #sphinxcadquerycanvas {
   position: fixed;
   left: 0px; top: 0px;

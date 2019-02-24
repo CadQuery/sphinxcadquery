@@ -29,7 +29,7 @@ common_source_header = [
     'import cadquery as cq',
 ]
 raw_html_template = """
-<div class="sphinxcadqueryview">
+<div class="sphinxcadqueryview", style="width:{width};height:{height}">
     <script>
         var parent = document.scripts[ document.scripts.length - 1 ].parentNode;
         parent.fname = "{parturi}";
@@ -120,6 +120,8 @@ class CadQueryDirective(Directive):
         raw_html = raw_html_template.format(
             parturi=fpath / fname,
             color=self.options.get('color', '#99bbdd'),
+            width=self.options.get('width', '100%'),
+            height=self.options.get('height', '400px'),
         )
         stl = nodes.raw('', raw_html, format='html')
         return [stl]
