@@ -47,18 +47,8 @@ You may want to play with the supported options for a customized look:
 
    .. cadquery:: ../3d/mydesign.py
       :select: mypart
-      :rotation: true
       :color: #ff00ff
-      :background: #222222
       :width: 80%
       :height: 200px
       :gridsize: 20.
       :griddivisions: 20
-
-
-Notes
------
-
-Thingiview files are taken from https://github.com/iXce/thingiview.js, a fork
-of https://github.com/tbuser/thingiview.js. See the original project for their
-respective license (LGPL).
