@@ -9,6 +9,7 @@ var render_queued_flag = false;
 
 window.addEventListener('load', init, false);
 window.addEventListener('scroll', queueRender, false);
+window.addEventListener('resize', queueRender, false);
 
 function queueRender() {
 
