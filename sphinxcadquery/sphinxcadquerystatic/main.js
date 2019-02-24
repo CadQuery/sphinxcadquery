@@ -159,6 +159,15 @@ function updateSize() {
 
 function render() {
 
+    render_queued_flag = false;
+
+    if ( canvas == undefined ) {
+
+        queueRender();
+        return;
+
+    }
+
     updateSize();
 
     renderer.setClearColor( 0xffffff );
@@ -197,6 +206,4 @@ function render() {
     } );
 
     t ++;
-    render_queued_flag = false;
-
 }
