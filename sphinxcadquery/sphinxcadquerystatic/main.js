@@ -4,7 +4,7 @@ if ( WEBGL.isWebGLAvailable() === false ) {
 
 }
 
-var scenes = [], views, t, canvas, renderer;
+var scenes = [], views, canvas, renderer;
 var render_queued_flag = false;
 
 window.addEventListener('load', init, false);
@@ -139,7 +139,6 @@ function init() {
 
     }
 
-    t = 0;
     queueRender();
 
 }
@@ -205,5 +204,4 @@ function render() {
 
     } );
 
-    t ++;
 }
