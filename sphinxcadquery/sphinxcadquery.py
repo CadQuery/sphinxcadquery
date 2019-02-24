@@ -119,7 +119,7 @@ class CadQueryDirective(Directive):
 
         raw_html = raw_html_template.format(
             parturi=fpath / fname,
-            color=self.options.get('color', '#99ccff'),
+            color=self.options.get('color', '#99bbdd'),
         )
         stl = nodes.raw('', raw_html, format='html')
         return [stl]

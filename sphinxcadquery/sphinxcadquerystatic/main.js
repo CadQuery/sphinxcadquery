@@ -41,13 +41,22 @@ function load_stl_into_scene( scene ) {
 
             color: scene.userData.view.color,
             specular: 0x111111,
-            shininess: 100,
+            shininess: 20,
 
         } );
         var mesh = new THREE.Mesh( geometry, material );
         mesh.castShadow = true;
         mesh.receiveShadow = true;
         scene.add( mesh );
+
+        camera = scene.userData.camera;
+        geometry.computeBoundingSphere();
+        var distance = geometry.boundingSphere.radius / Math.atan( (camera.fov / 2) * (Math.PI / 180) );
+        var factor = distance / Math.sqrt(2);
+        camera.position.set( -factor / 3, -factor, factor );
+        camera.lookAt( geometry.boundingSphere.center );
+        scene.userData.distance_factor = factor;
+
         queueRender();
 
     }
@@ -114,10 +123,11 @@ function init() {
 
         scene.userData.view = views[ n ];
 
-        var loader = new THREE.STLLoader();
-        loader.load( scene.userData.view.fname, load_stl_into_scene( scene ) );
-
         scene.add( new THREE.AmbientLight( 0x888888 ) );
+
+        hemiLight = new THREE.HemisphereLight( 0x888888, 0x222222, 0.3 );
+        hemiLight.position.set( 50, 50, 100 );
+        scene.add( hemiLight );
 
         var grid = new TranslucentGrid( 100, 20, 0x888888, 0xdddddd, 0.6 );
         grid.rotateOnAxis( new THREE.Vector3( 1, 0, 0 ), 90 * ( Math.PI / 180 ) );
@@ -127,13 +137,16 @@ function init() {
         var camera = new THREE.PerspectiveCamera( 30, 1, 1, 10000 );
         camera.up.set( 0, 0, 1 );
         camera.position.set( 0, - 9, 6 );
-        camera.add( new THREE.PointLight( 0xffffff, 0.6 ) );
+        camera.add( new THREE.PointLight( 0xffffff, 0.5 ) );
         scene.add( camera );
         scene.userData.camera = camera;
 
         var controls = new THREE.OrbitControls( camera, views[ n ] );
         controls.addEventListener( 'change', queueRender );
         scene.userData.controls = controls;
+
+        var loader = new THREE.STLLoader();
+        loader.load( scene.userData.view.fname, load_stl_into_scene( scene ) );
 
         scenes.push( scene );
 
