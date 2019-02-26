@@ -55,6 +55,7 @@ function load_stl_into_scene( scene ) {
         var factor = distance / Math.sqrt(2);
         camera.position.set( -factor / 3, -factor, factor );
         camera.lookAt( geometry.boundingSphere.center );
+        scene.userData.controls.target = geometry.boundingSphere.center;
         scene.userData.distance_factor = factor;
 
         queueRender();
