@@ -7,6 +7,8 @@ An extension to visualize CadQuery 3D files in your Sphinx documentation.
 
    pip install sphinxcadquery
 
+Of course, ``cadquery`` needs to be installed as well.
+
 
 Usage
 -----
@@ -22,33 +24,55 @@ Enable the Sphinx extension in your ``conf.py`` file:
 
 Then you can use the ``.. cadquery::`` directive in your documentation:
 
-.. cadquery::
+.. code:: rest
 
-   result = cadquery.Workplane("XY").box(2, 2, 2) \
-      .edges("|Z and <Y").chamfer(0.2)
+   .. cadquery::
+
+      result = cadquery.Workplane("XY").box(2, 2, 2)
 
 You may provide a source code file instead:
 
-.. code:: sphinx
+.. code:: rest
 
    .. cadquery:: ../3d/mydesign.py
 
-By default it will try to load a part named ``result`` or ``part`` in that
-source code. You may change that by providing a explicit name to select:
 
-.. code:: sphinx
+Options
+-------
+
+By default it will try to load a part named ``result`` or ``part`` in that
+source code. You may change that by providing an explicit name to select:
+
+.. code:: rest
 
    .. cadquery:: ../3d/mydesign.py
       :select: mypart
 
 You may want to play with the supported options for a customized look:
 
-.. code:: sphinx
+.. code:: rest
 
-   .. cadquery:: ../3d/mydesign.py
+   .. cadquery::
       :select: mypart
+      :include-source: true
       :color: #ff00ff
       :width: 80%
       :height: 200px
       :gridsize: 20.
       :griddivisions: 20
+
+      mypart = cadquery.Workplane("XY").box(2, 2, 2)
+
+
+Global options
+--------------
+
+You may as well configure some options globally, by setting the corresponding
+variable in your ``conf.py`` file:
+
+.. code:: python
+
+   # Define a different default color
+   sphinxcadquery_color = '#bb0000'
+   # By default, always show the source code above the scene
+   sphinxcadquery_include_source = True
