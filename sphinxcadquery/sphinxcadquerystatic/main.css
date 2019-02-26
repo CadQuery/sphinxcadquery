@@ -1,11 +1,19 @@
+/* Alabaster theme */
 div.body {
     background-color: transparent !important;
 }
+/* Read the Docs theme */
+div.wy-nav-content {
+    background-color: transparent !important;
+}
+section.wy-nav-content-wrap {
+    background-color: transparent !important;
+}
+/* Canvas */
 #sphinxcadquerycanvas {
-  position: fixed;
-  left: 0px; top: 0px;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  z-index: -1;
+    position: fixed;
+    left: 0px; top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
 }
