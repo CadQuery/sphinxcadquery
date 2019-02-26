@@ -3,6 +3,7 @@ from hashlib import sha256
 import importlib
 import json
 import logging
+import textwrap
 from uuid import uuid4
 from pathlib import Path
 from pkg_resources import resource_filename
@@ -86,6 +87,12 @@ class CadQueryDirective(Directive):
 
     def run(self):
 
+        doc_source_name = self.state.document.attributes['source']
+
+        self.options.setdefault('include-source',
+                                setup.app.config.sphinxcadquery_include_source)
+        self.options.setdefault('color', setup.app.config.sphinxcadquery_color)
+
         if len(self.arguments):
             fname = Path(setup.app.srcdir) / self.arguments[0]
             fname = fname.resolve()
@@ -112,7 +119,7 @@ class CadQueryDirective(Directive):
         with open(outputfname, 'w') as outputfile:
             outputfile.write(content)
 
-        source_path = Path(self.state.document.attributes['source'])
+        source_path = Path(doc_source_name)
         depth = \
             len(source_path.parent.relative_to(Path(setup.app.srcdir)).parents)
         relative_uri = Path('.')
@@ -121,14 +128,24 @@ class CadQueryDirective(Directive):
 
         raw_html = raw_html_template.format(
             parturi=relative_uri / fpath / fname,
-            color=self.options.get('color', '#99bbdd'),
+            color=self.options['color'],
             width=self.options.get('width', '100%'),
             height=self.options.get('height', '400px'),
             gridsize=self.options.get('gridsize', 100.),
             griddivisions=self.options.get('griddivisions', 20),
         )
-        stl = nodes.raw('', raw_html, format='html')
-        return [stl]
+
+        lines = []
+        if self.options['include-source']:
+            data = textwrap.indent('\n'.join(self.content.data), '    ')
+            lines = ['.. code-block:: python', '', *data.splitlines()]
+            lines.extend(['', ''])
+        lines.extend(['', ''])
+        raw_html = textwrap.indent(raw_html, '    ')
+        lines.extend(['.. raw:: html', '', *raw_html.splitlines()])
+        lines.extend(['', ''])
+        self.state_machine.insert_input(lines, source=doc_source_name)
+        return []
 
 
 def copy_asset_files(app, exc):
@@ -150,4 +167,6 @@ def setup(app):
     app.add_javascript('sphinxcadquerystatic/main.js')
     app.add_stylesheet('sphinxcadquerystatic/main.css')
     app.add_directive('cadquery', CadQueryDirective)
+    app.add_config_value('sphinxcadquery_color', '#99bbdd', 'env')
+    app.add_config_value('sphinxcadquery_include_source', False, 'env')
     return {'version': __version__, 'parallel_read_safe': True}
