@@ -33,7 +33,7 @@ function load_amf_into_scene( scene ) {
 
 }
 
-function load_stl_into_scene( scene ) {
+function load_geometry_into_scene( scene ) {
 
     return function ( geometry ) {
 
@@ -149,8 +149,8 @@ function init() {
         controls.addEventListener( 'change', queueRender );
         scene.userData.controls = controls;
 
-        var loader = new THREE.STLLoader();
-        loader.load( scene.userData.view.fname, load_stl_into_scene( scene ) );
+        var loader = new THREE.LegacyJSONLoader();
+        loader.load( scene.userData.view.fname, load_geometry_into_scene( scene ) );
 
         scenes.push( scene );
 
