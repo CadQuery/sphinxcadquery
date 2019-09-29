@@ -76,6 +76,7 @@ class CadQueryDirective(Directive):
     final_argument_whitespace = True
     option_spec = {
         'select': directives.unchanged,
+        'include-source': bool,
         'color': directives.unchanged,
         'background': directives.unchanged,
         'rotation': directive_truefalse,
