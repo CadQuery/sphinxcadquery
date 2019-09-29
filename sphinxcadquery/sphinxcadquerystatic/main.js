@@ -49,6 +49,10 @@ function load_geometry_into_scene( scene ) {
         mesh.receiveShadow = true;
         scene.add( mesh );
 
+        var edges = new THREE.EdgesGeometry( geometry, 5 );
+        var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x666666 } ) );
+        scene.add( line );
+
         camera = scene.userData.camera;
         geometry.computeBoundingSphere();
         var distance = geometry.boundingSphere.radius / Math.atan( (camera.fov / 2) * (Math.PI / 180) );
