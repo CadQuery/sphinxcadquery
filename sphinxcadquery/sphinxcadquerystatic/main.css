@@ -11,9 +11,11 @@ section.wy-nav-content-wrap {
 }
 /* Canvas */
 #sphinxcadquerycanvas {
-    position: fixed;
-    left: 0px; top: 0px;
+    position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
+    display: block;
     z-index: -1;
 }

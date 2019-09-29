@@ -197,6 +197,9 @@ function render() {
     renderer.setClearColor( 0x000000 );
     renderer.setScissorTest( true );
 
+    const transform = `translateY(${window.scrollY}px)`;
+    renderer.domElement.style.transform = transform;
+
     scenes.forEach( function ( scene ) {
 
         var rect = scene.userData.view.getBoundingClientRect();
