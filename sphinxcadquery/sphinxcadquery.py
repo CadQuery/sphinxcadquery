@@ -108,11 +108,11 @@ class CadQueryDirective(Directive):
 
         select = self.options.get('select', None)
         part = find_part(handle, select)
-        content = cadquery.exporters.toString(part, 'STL')
+        content = cadquery.exporters.toString(part, 'TJS')
         digest = sha256(content.encode('utf')).hexdigest()
 
         fpath = Path('_static') / 'sphinxcadquery'
-        fname = Path(digest).with_suffix('.stl')
+        fname = Path(digest).with_suffix('.tjs')
         outputdir = Path(setup.app.builder.outdir) / fpath
         outputdir.mkdir(parents=True, exist_ok=True)
         outputfname = outputdir / fname
@@ -162,6 +162,7 @@ def setup(app):
     app.add_javascript('sphinxcadquerystatic/three.js')
     app.add_javascript('sphinxcadquerystatic/AMFLoader.js')
     app.add_javascript('sphinxcadquerystatic/STLLoader.js')
+    app.add_javascript('sphinxcadquerystatic/LegacyJSONLoader.js')
     app.add_javascript('sphinxcadquerystatic/jszip.min.js')
     app.add_javascript('sphinxcadquerystatic/OrbitControls.js')
     app.add_javascript('sphinxcadquerystatic/WebGL.js')
