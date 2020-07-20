@@ -1,6 +1,7 @@
 import os
 from hashlib import sha256
 import importlib
+from io import BytesIO
 import json
 import logging
 import textwrap
@@ -108,8 +109,10 @@ class CadQueryDirective(Directive):
 
         select = self.options.get('select', None)
         part = find_part(handle, select)
-        content = cadquery.exporters.toString(part, 'TJS')
-        digest = sha256(content.encode('utf')).hexdigest()
+        iobuff = BytesIO()
+        cadquery.exporters.exportShape(part, 'AMF', iobuff, tolerance=0.1)
+        content = iobuff.getvalue()
+        digest = sha256(content).hexdigest()
 
         fpath = Path('_static') / 'sphinxcadquery'
         fname = Path(digest).with_suffix('.tjs')
@@ -117,7 +120,7 @@ class CadQueryDirective(Directive):
         outputdir.mkdir(parents=True, exist_ok=True)
         outputfname = outputdir / fname
 
-        with open(outputfname, 'w') as outputfile:
+        with open(outputfname, 'wb') as outputfile:
             outputfile.write(content)
 
         source_path = Path(doc_source_name)

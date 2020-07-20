@@ -158,8 +158,8 @@ function init() {
         controls.addEventListener( 'change', queueRender );
         scene.userData.controls = controls;
 
-        var loader = new THREE.LegacyJSONLoader();
-        loader.load( scene.userData.view.fname, load_geometry_into_scene( scene ) );
+        var loader = new THREE.AMFLoader();
+        loader.load( scene.userData.view.fname, load_amf_into_scene( scene ) );
 
         scenes.push( scene );
 
