@@ -116,7 +116,12 @@ function init() {
 
     canvas = document.getElementById( 'sphinxcadquerycanvas' );
 
-    renderer = new THREE.WebGLRenderer( { canvas: canvas, antialias: true } );
+    renderer = new THREE.WebGLRenderer( {
+        canvas: canvas,
+        antialias: true,
+        alpha: true,
+        premultipliedAlpha: false,
+    } );
     renderer.setPixelRatio( window.devicePixelRatio );
 
     views = document.querySelectorAll( '.sphinxcadqueryview' );
@@ -190,11 +195,6 @@ function render() {
 
     updateSize();
 
-    renderer.setClearColor( 0xffffff );
-    renderer.setScissorTest( false );
-    renderer.clear();
-
-    renderer.setClearColor( 0x000000 );
     renderer.setScissorTest( true );
 
     const transform = `translateY(${window.scrollY}px)`;

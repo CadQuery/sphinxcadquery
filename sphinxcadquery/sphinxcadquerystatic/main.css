@@ -1,14 +1,3 @@
-/* Alabaster theme */
-div.body {
-    background-color: transparent !important;
-}
-/* Read the Docs theme */
-div.wy-nav-content {
-    background-color: transparent !important;
-}
-section.wy-nav-content-wrap {
-    background-color: transparent !important;
-}
 /* Canvas */
 #sphinxcadquerycanvas {
     position: absolute;
@@ -17,5 +6,5 @@ section.wy-nav-content-wrap {
     width: 100%;
     height: 100%;
     display: block;
-    z-index: -1;
+    pointer-events: none;
 }
