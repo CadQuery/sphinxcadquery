@@ -44,12 +44,11 @@ function load_geometry_into_scene( scene ) {
             shininess: 20,
 
         } );
+        geometry.computeVertexNormals();
         var mesh = new THREE.Mesh( geometry, material );
-        mesh.castShadow = true;
-        mesh.receiveShadow = true;
         scene.add( mesh );
 
-        var edges = new THREE.EdgesGeometry( geometry, 5 );
+        var edges = new THREE.EdgesGeometry( geometry, 15 );
         var line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x666666 } ) );
         scene.add( line );
 
