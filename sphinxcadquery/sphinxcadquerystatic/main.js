@@ -202,13 +202,6 @@ function render() {
     scenes.forEach( function ( scene ) {
 
         var rect = scene.userData.view.getBoundingClientRect();
-        // check if it's offscreen. If so skip it
-        if ( rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
-             rect.right < 0 || rect.left > renderer.domElement.clientWidth ) {
-
-            return; // it's off screen
-
-        }
 
         // set the viewport
         var width = rect.right - rect.left;
