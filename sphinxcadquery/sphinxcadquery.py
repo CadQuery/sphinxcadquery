@@ -167,7 +167,7 @@ def setup(app):
     app.add_js_file('sphinxcadquerystatic/OrbitControls.js')
     app.add_js_file('sphinxcadquerystatic/WebGL.js')
     app.add_js_file('sphinxcadquerystatic/main.js')
-    app.add_stylesheet('sphinxcadquerystatic/main.css')
+    app.add_css_file('sphinxcadquerystatic/main.css')
     app.add_directive('cadquery', CadQueryDirective)
     app.add_config_value('sphinxcadquery_color', '#99bbdd', 'env')
     app.add_config_value('sphinxcadquery_include_source', False, 'env')
