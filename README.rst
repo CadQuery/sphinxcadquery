@@ -1,6 +1,3 @@
-
-[![CI](https://github.com/Peque/sphinxcadquery/actions/workflows/CI.yml/badge.svg)](https://github.com/Peque/sphinxcadquery/actions/workflows/CI.yml)
-
 sphinxcadquery
 ==============
 
