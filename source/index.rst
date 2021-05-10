@@ -3,14 +3,20 @@ Example 1
 ^^^^^^^^^
 
 .. cadquery::
+
+   result = cadquery.Workplane("XY").box(2, 2, 2)
+
    
-   import paramak
-   result = paramak.RotateStraightShape(
-    points=[
-        (400, 100),
-        (400, 200),
-        (600, 200),
-        (600, 100)
-           ],
-    rotation_angle = 180
-   ).solid
+Example 2
+^^^^^^^^^
+
+.. cadquery::
+   :select: mypart
+   :include-source: true
+   :color: #ff00ff
+   :width: 80%
+   :height: 200px
+   :gridsize: 20.
+   :griddivisions: 20
+
+   mypart = cadquery.Workplane("XY").box(2, 2, 2)
