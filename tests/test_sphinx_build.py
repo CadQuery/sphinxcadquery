@@ -1,9 +1,8 @@
 
-import unittest
 import subprocess
 
 
-class TestSphinxBuild(unittest.TestCase):
+class TestSphinxBuild():
 
     def test_building_example_docs(self):
         """Builds documentation that contains a few example use cases"""
