@@ -1,5 +1,5 @@
 
-[![CI](https://github.com/Shimwell/sphinxcadquery/actions/workflows/CI.yml/badge.svg)](https://github.com/Peque/sphinxcadquery/actions/workflows/CI.yml)
+[![CI](https://github.com/Peque/sphinxcadquery/actions/workflows/CI.yml/badge.svg)](https://github.com/Peque/sphinxcadquery/actions/workflows/CI.yml)
 
 sphinxcadquery
 ==============
