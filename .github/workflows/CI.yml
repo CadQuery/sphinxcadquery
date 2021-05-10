@@ -17,7 +17,7 @@ jobs:
 
    - name: install package
      run: |
-       sudo python setup.py install
+       pip install .
 
    - name: test package
      run: |
