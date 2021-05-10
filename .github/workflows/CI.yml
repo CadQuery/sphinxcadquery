@@ -15,5 +15,6 @@ jobs:
 
    - name: test package
      run: |
+       pip install pytest
        pytest tests
  
