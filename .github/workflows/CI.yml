@@ -9,6 +9,12 @@ jobs:
    
    steps:    
    - uses: actions/checkout@v2
+   - uses: s-weigand/setup-conda@v1
+
+   - name: install cadquery
+     run: |
+      conda install -c conda-forge -c cadquery cadquery=2
+
    - name: install package
      run: |
        sudo python setup.py install
