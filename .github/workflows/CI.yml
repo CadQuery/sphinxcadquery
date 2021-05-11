@@ -1,0 +1,20 @@
+name: CI
+on:  
+  pull_request:    
+
+jobs:  
+  build:     
+   runs-on: ubuntu-latest
+
+   steps:    
+   - uses: actions/checkout@v2
+   - uses: s-weigand/setup-conda@v1
+
+   - name: installation
+     run: |
+      conda install -c conda-forge -c cadquery cadquery=2
+      pip install pytest
+      pip install .
+   - name: test package
+     run: |
+       pytest tests
