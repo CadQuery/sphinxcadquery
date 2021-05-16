@@ -63,6 +63,14 @@ You may want to play with the supported options for a customized look:
 
       mypart = cadquery.Workplane("XY").box(2, 2, 2)
 
+Optionally the grid can also be removed by setting gridsize to 0
+
+.. code:: rest
+
+   .. cadquery::
+      :gridsize: 0
+
+      result = cadquery.Workplane("XY").box(2, 2, 2)
 
 Global options
 --------------

@@ -140,11 +140,13 @@ function init() {
 
         var gsize = parseFloat(scene.userData.view.gridsize);
         var gdivs = parseInt(scene.userData.view.griddivisions);
-        var grid = new TranslucentGrid( gsize, gdivs, 0x888888, 0xdddddd, 0.6, );
+        if ( gsize > 0 ){
+            var grid = new TranslucentGrid( gsize, gdivs, 0x888888, 0xdddddd, 0.6, );
 
-        grid.rotateOnAxis( new THREE.Vector3( 1, 0, 0 ), 90 * ( Math.PI / 180 ) );
-        grid.material.transparent = true;
-        scene.add( grid );
+            grid.rotateOnAxis( new THREE.Vector3( 1, 0, 0 ), 90 * ( Math.PI / 180 ) );
+            grid.material.transparent = true;
+            scene.add( grid );
+        }
 
         var camera = new THREE.PerspectiveCamera( 30, 1, 1, 10000 );
         camera.up.set( 0, 0, 1 );
