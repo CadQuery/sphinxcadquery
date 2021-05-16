@@ -20,3 +20,11 @@ Example 2
    :griddivisions: 20
 
    mypart = cadquery.Workplane("XY").box(2, 2, 2)
+
+Example 3
+^^^^^^^^^
+
+.. cadquery::
+   :gridsize: 0
+
+   result = cadquery.Workplane("XY").box(2, 2, 2)
