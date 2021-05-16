@@ -25,7 +25,6 @@ Example 3
 ^^^^^^^^^
 
 .. cadquery::
-   :select: mypart
    :gridsize: 0
 
    result = cadquery.Workplane("XY").box(2, 2, 2)
